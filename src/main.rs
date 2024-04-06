@@ -1,6 +1,6 @@
 use axum::{
     routing::get,
-    Router, extract::Path, body::StreamBody, response::IntoResponse,
+    Router, extract::Path, body::Body, response::IntoResponse,
 };
 
 async fn handler(Path(file): Path<String>) -> impl IntoResponse {
@@ -11,7 +11,7 @@ async fn handler(Path(file): Path<String>) -> impl IntoResponse {
 
     let stream = res.bytes_stream();
 
-    let stream = StreamBody::new(stream);
+    let stream = Body::from_stream(stream);
 
     stream
 }
@@ -22,8 +22,6 @@ async fn main() {
     let app = Router::new().route("/file/:file", get(handler));
 
     // run it with hyper on localhost:3000
-    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
 }

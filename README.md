@@ -13,6 +13,6 @@ wget http://0.0.0.0:3000/file/OpenBangla-Keyboard_2.0.0-ubuntu20.04.deb
 which will proxy the download from `https://github.com/OpenBangla/OpenBangla-Keyboard/releases/download/2.0.0/OpenBangla-Keyboard_2.0.0-ubuntu20.04.deb`
 
 ## Dependencies
-* Axum `0.6`
-* Reqwest `0.11`
-* Tokio `1.27`
+* Axum `0.7`
+* Reqwest `0.12`
+* Tokio `1`
